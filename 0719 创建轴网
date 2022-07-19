@@ -1,0 +1,21 @@
+# pyrevit
+# pyrevit-test
+import Autodesk
+from Autodesk.Revit.DB import *
+ 
+# 获取当前文档
+doc = __revit__.ActiveUIDocument.Document
+ 
+# 1.创建定位线
+p_1 = XYZ(0,0,0)
+p_2 = XYZ(50,0,0)
+line_1 = Line.CreateBound(p_1, p_2)
+ 
+# 2.创建轴网
+t = Transaction(doc, "创建轴网")
+t.Start()
+grid = Grid.Create(doc, line_1)
+# 3.设置轴网名称
+g_name = grid.get_Parameter(BuiltInParameter.DATUM_TEXT)
+g_name.Set("1")
+t.Commit()
